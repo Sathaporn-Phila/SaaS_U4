@@ -1,7 +1,9 @@
 class MoviesController < ApplicationController
-    def show
-        id = params[:id] # retrieve movie ID from URI route
-        @movie = Movie.find(id) # look up movie by unique ID
-        # will render app/views/movies/show.html.haml by default
-      end
+  def show
+    @movie = Movie.find_by_id(params[:id]) # what if this movie not in DB?
+    # BUG: we should check @movie for validity here!
+  end
+  def new
+    # default: render 'new' template
+  end
 end
