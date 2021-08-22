@@ -8,8 +8,10 @@
     = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
  
   %body
+    = link_to movies_path do
+      %h2 Rotten Potatoes
     = yield
     - if flash[:notice]
-      -#notice.message= flash[:notice]
+      #notice.message= flash[:notice]
     - elsif flash[:warning]
-      -#warning.message= flash[:warning]
+      #warning.message= flash[:warning]

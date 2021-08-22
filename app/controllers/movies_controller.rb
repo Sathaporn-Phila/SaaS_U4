@@ -1,8 +1,18 @@
 class MoviesController < ApplicationController
-  def show
-    @movie = Movie.find_by_id(params[:id]) # what if this movie not in DB?
-    # BUG: we should check @movie for validity here!
+  def index
+    @movies = Movie.order(:title).all
   end
+
+  def show
+    id = params[:id] # retrieve movie ID from URI route
+    begin
+       @movie = Movie.find(id) # look up movie by unique ID
+       # will render app/views/movies/show.html.haml by default
+    rescue
+      flash[:notice] = "Movie id #{id} not found."
+      redirect_to movies_path
+    end
+   end
 
   def new
     # default: render 'new' template
@@ -11,7 +21,7 @@ class MoviesController < ApplicationController
   def create
     @movie = Movie.create!(movie_params)
     flash[:notice] = "#{@movie.title} was successfully created."
-    redirect_to movies_path
+    redirect_to @movie
   end
 
   def edit

@@ -28,16 +28,23 @@
   a {
     background: transparent;
     color: maroon;
-    text-decoration: underline;
+    text-decoration: none;
     font-weight: bold;
   }
-  h1 {
+  h2 {
     color: maroon;
     font-size: 150%;
     font-style: italic;
     display: block;
     width: 100%;
     border-bottom: 1px solid DarkSlateGrey;
+  }
+  h1 {
+    color: maroon;
+    font-size: 100%;
+    font-style: italic;
+    display: block;
+    width: 100%;
   }
   h1.title {
     margin: 0 0 1em;
@@ -62,6 +69,9 @@
   table#movies th, table#movies td {
     padding: 4px;
     text-align: left;
+  }
+  table#movies tr:hover{
+    background-color: yellow
   }
   #notice, #warning {
     background: rosybrown;
