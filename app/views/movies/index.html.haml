@@ -4,7 +4,6 @@
 - else
   %p.login= link_to 'Log in with your Facebook account', user_facebook_omniauth_authorize_path,method: :post
 
-- @movies.each do |movie|
 
 %h1 All Movies
 
@@ -26,3 +25,4 @@
         %td= link_to "More about #{movie.title}", movie_path(movie)
 
 = link_to 'Add new movie', new_movie_path
+

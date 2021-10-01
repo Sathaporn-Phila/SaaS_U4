@@ -10,6 +10,7 @@
 # Many of these configuration options can be set straight in your model.
 Devise.setup do |config|
   config.omniauth :facebook,'377872590506249','2eca519f92e4d177b82e06ea89fc4e0c',scope: 'public_profile',callback_url: "http://localhost:3000/users/auth/facebook/callback",
+  
   client_options: {
       site: 'https://graph.facebook.com/v8.0',
       authorize_url: "https://www.facebook.com/v8.0/dialog/oauth"

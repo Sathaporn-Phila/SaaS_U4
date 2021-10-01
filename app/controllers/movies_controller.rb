@@ -1,6 +1,6 @@
 class MoviesController < ApplicationController
   def index
-    @movies = Movie.order(:title).all
+    @movies = Movie.all
   end
 
   def show
@@ -52,11 +52,11 @@ class MoviesController < ApplicationController
 
   private
 
-  def movie_params
-    params.require(:movie).permit(:title, :rating, :release_date, :description)
-  end
+    def movie_params
+      params.require(:movie).permit(:title, :rating, :release_date, :description)
+    end
 
-  def movies_with_good_reviews
+=begin  def movies_with_good_reviews
     @movies = Movie.joins(:reviews).group(:movie_id).
       having('AVG(reviews.potatoes) > 3')
   end
@@ -77,5 +77,5 @@ class MoviesController < ApplicationController
       @movies = @movies.send(filter) if params[filter]
     end
   end
-  
+=end  
 end

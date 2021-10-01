@@ -1,10 +1,10 @@
 class ReviewsController < ApplicationController
-    before_filter :has_moviegoer_and_movie, :only => [:new, :create]
+    before_action :has_moviegoer_and_movie, :only => [:new, :create]
     protected
     def has_moviegoer_and_movie
-      unless @current_user
+      unless @user
         flash[:warning] = 'You must be logged in to create a review.'
-        redirect_to login_path
+        redirect_to movies_path
       end
       unless (@movie = Movie.find_by_id(params[:movie_id]))
         flash[:warning] = 'Review must be for an existing movie.'
@@ -20,7 +20,7 @@ class ReviewsController < ApplicationController
       # assigned by the mass-assignment from params[:review], we set it
       # by using the << method on the association.  We could also
       # set it manually with review.moviegoer = @current_user.
-      @current_user.reviews << @movie.reviews.build(params[:review])
+      @user.reviews << @movie.reviews.build(params[:review])
       redirect_to movie_path(@movie)
     end
 end
