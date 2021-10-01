@@ -3,6 +3,9 @@
   =link_to 'log out', logout_path
 - else
   %p.login= link_to 'Log in with your Facebook account', user_facebook_omniauth_authorize_path,method: :post
+
+- @movies.each do |movie|
+
 %h1 All Movies
 
 %table#movies

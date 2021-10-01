@@ -12,7 +12,7 @@ class MoviesController < ApplicationController
       flash[:notice] = "Movie id #{id} not found."
       redirect_to movies_path
     end
-   end
+  end
 
   def new
     # default: render 'new' template
@@ -52,8 +52,30 @@ class MoviesController < ApplicationController
 
   private
 
-    def movie_params
-      params.require(:movie).permit(:title, :rating, :release_date, :description)
+  def movie_params
+    params.require(:movie).permit(:title, :rating, :release_date, :description)
+  end
+
+  def movies_with_good_reviews
+    @movies = Movie.joins(:reviews).group(:movie_id).
+      having('AVG(reviews.potatoes) > 3')
+  end
+  def movies_for_kids
+    @movies = Movie.where('rating in ?', %w(G PG))
+  end
+  
+  def movies_with_filters
+    @movies = Movie.with_good_reviews(params[:threshold])
+    @movies = @movies.for_kids          if params[:for_kids]
+    @movies = @movies.with_many_fans    if params[:with_many_fans]
+    @movies = @movies.recently_reviewed if params[:recently_reviewed]
+  end
+  # or even DRYer:
+  def movies_with_filters_2
+    @movies = Movie.with_good_reviews(params[:threshold])
+    %w(for_kids with_many_fans recently_reviewed).each do |filter|
+      @movies = @movies.send(filter) if params[filter]
     end
+  end
   
 end
