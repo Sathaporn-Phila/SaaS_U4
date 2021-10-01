@@ -19,7 +19,7 @@ class ReviewsController < ApplicationController
       # since moviegoer_id is a protected attribute that won't get
       # assigned by the mass-assignment from params[:review], we set it
       # by using the << method on the association.  We could also
-      # set it manually with review.moviegoer = @current_user.
+      # set it manually with review.moviegoer = @user.
       @user.reviews << @movie.reviews.build(params[:review])
       redirect_to movie_path(@movie)
     end

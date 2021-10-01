@@ -6,4 +6,8 @@ class User < ActiveRecord::Base
     user ||= User.create!(provider: auth.provider, uid: auth.uid, last_name: name_split[0], first_name: name_split[1], email: auth.info.email, password: Devise.friendly_token[0, 20])
       user
   end
+
+  has_many :reviews
+  has_many :movies, :through => :reviews
+
 end

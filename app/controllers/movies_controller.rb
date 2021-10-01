@@ -56,7 +56,7 @@ class MoviesController < ApplicationController
       params.require(:movie).permit(:title, :rating, :release_date, :description)
     end
 
-=begin  def movies_with_good_reviews
+  def movies_with_good_reviews
     @movies = Movie.joins(:reviews).group(:movie_id).
       having('AVG(reviews.potatoes) > 3')
   end
@@ -77,5 +77,5 @@ class MoviesController < ApplicationController
       @movies = @movies.send(filter) if params[filter]
     end
   end
-=end  
+
 end

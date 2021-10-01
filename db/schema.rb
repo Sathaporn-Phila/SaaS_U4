@@ -32,10 +32,10 @@ ActiveRecord::Schema.define(version: 2021_10_01_112755) do
   create_table "reviews", force: :cascade do |t|
     t.integer "potatoes"
     t.text "comments"
-    t.integer "moviegoer_id"
+    t.integer "user_id"
     t.integer "movie_id"
     t.index ["movie_id"], name: "index_reviews_on_movie_id"
-    t.index ["moviegoer_id"], name: "index_reviews_on_moviegoer_id"
+    t.index ["user_id"], name: "index_reviews_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
