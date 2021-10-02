@@ -1,0 +1,11 @@
+- unless @movie.errors.empty? 
+  #warning
+    Errors prevented this movie from being #{controller.action_name}d:
+    %ul
+      - @movie.errors.full_messages.each do |error|
+        %li= error
+= label :review, 'How many potatoes:'
+= select_tag 'review[potatoes]', options_for_select(1..5)
+
+= label :review, 'Comments'
+= text_field :review, :comments

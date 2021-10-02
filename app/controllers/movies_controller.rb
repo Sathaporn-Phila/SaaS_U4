@@ -19,6 +19,11 @@ class MoviesController < ApplicationController
     @movie = Movie.new
   end
 
+  def search_tmdb
+    @movie = Movie.new
+    flash[:notice]="#{@movie.all}"
+  end
+
   def create
     @movie = Movie.new(movie_params)
     if @movie.save
@@ -55,7 +60,6 @@ class MoviesController < ApplicationController
     def movie_params
       params.require(:movie).permit(:title, :rating, :release_date, :description)
     end
-
   def movies_with_good_reviews
     @movies = Movie.joins(:reviews).group(:movie_id).
       having('AVG(reviews.potatoes) > 3')

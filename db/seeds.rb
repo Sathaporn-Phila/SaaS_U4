@@ -15,7 +15,7 @@ more_movies = [
   {:title => 'Raiders of the Lost Ark', :rating => 'PG',
     :release_date => '12-Jun-1981'}
 ]
- 
-more_movies.each do |movie|
-  Movie.create!(movie)
+user_test = [{:provider => "facebook",:uid => "7",:first_name => "a",:last_name => "b",:email => "c",:password => "d"}]
+user_test.each do |item|
+  User.create!(item) 
 end

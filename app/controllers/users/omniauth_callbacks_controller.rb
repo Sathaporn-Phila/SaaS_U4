@@ -16,8 +16,9 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     end
 
     def destroy
-      @user.destroy
-      session["facebook_data"] = nil
-      sign_out_and_redirect @user
+      session.clear
+      set_user
+      redirect_to('/users/sign_out')
     end
+
   end
