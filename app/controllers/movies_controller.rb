@@ -1,7 +1,10 @@
 class MoviesController < ApplicationController
   before_action :authenticate_user!,except: [:index]
+
+  skip_before_action :verify_authenticity_token # <-- Bug report: Before process_action callback :verify_authenticity_token has not been defined
   def index
     @movies = Movie.all
+    @results = []
   end
 
   def show
@@ -22,14 +25,14 @@ class MoviesController < ApplicationController
   end
 
   def search_tmdb
+    set_config
     @title = params[:movie][:title]
     logger.debug @title
     @source = Tmdb::Search.new
     @source.resource('movie')
     @source.query(@title)
-    @result = @source.fetch
-    logger.debug @result
-    redirect_to movies_path
+    @results = @source.fetch
+    render "_choose_movie"
   end
 
   def create
@@ -63,15 +66,56 @@ class MoviesController < ApplicationController
     redirect_to movies_path
   end
 
+  def set_movie_from_result
+    @movie = Movie.create!(:title => params[:title],:rating =>params[:rating],:release_date =>params[:release_date],:description=>params[:description]) 
+    redirect_to movies_path
+  end
+=begin
+# ของริว  ของริว  ของริว  ของริว  ของริว  ของริว  ของริว 
+def search_tmdb
+		@search_tmdb = params[:search_tmdb]
+		if @search_tmdb == ""
+			flash[:warning] = "You cannot blank"
+			redirect_to movies_path
+		else 
+			@movies = Movie.find_in_tmdb(@search_tmdb)
+			if @movies != []
+				render 'tmdb'
+			else
+				flash[:warning] = "Sorry, No match for '#{params[:search_tmdb]}'"
+				redirect_to movies_path
+			end 
+		end
+	end
+
+	def create_from_tmdb
+		movie_id = params[:tmdb_id]
+		m = Movie.get_from_tmdb(movie_id)
+		@movie = Movie.new({
+						:title => m["title"], 
+						:rating => "",    
+						:release_date => m["release_date"], 
+						:description => m["overview"]
+		})
+		if @movie.save
+			flash[:notice] = "'#{@movie.title}' was successfully created."
+			redirect_to new_movie_review_path(@movie)
+		end
+	end
+=end
+
   private
 
-    def movie_params
-      params.require(:movie).permit(:title, :rating, :release_date, :description)
-    end
+  def movie_params
+    params.require(:movie).permit(:title, :rating, :release_date, :description)
+  end
+
+=begin
   def movies_with_good_reviews
     @movies = Movie.joins(:reviews).group(:movie_id).
       having('AVG(reviews.potatoes) > 3')
   end
+
   def movies_for_kids
     @movies = Movie.where('rating in ?', %w(G PG))
   end
@@ -87,7 +131,6 @@ class MoviesController < ApplicationController
     @movies = Movie.with_good_reviews(params[:threshold])
     %w(for_kids with_many_fans recently_reviewed).each do |filter|
       @movies = @movies.send(filter) if params[filter]
-    end
   end
-
+=end
 end

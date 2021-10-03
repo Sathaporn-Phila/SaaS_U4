@@ -16,8 +16,8 @@
  html, body {
     margin: 0;
     padding: 0;
-    background: White;
-    color: DarkSlateGrey;
+    background: rgb(44, 49, 51);
+    color: #ffffff;
     font-family: Tahoma, Verdana, sans-serif;
     font-size: 10pt;
   }
@@ -27,31 +27,38 @@
   }
   a {
     background: transparent;
-    color: maroon;
-    text-decoration: none;
+    color: #E69D45;
+    text-decoration: underline;
     font-weight: bold;
   }
-  h2 {
-    color: maroon;
-    font-size: 150%;
+  h3 {
+    color: #E69D45;
+    font-size: 100%;
     font-style: italic;
     display: block;
     width: 100%;
-    border-bottom: 1px solid DarkSlateGrey;
   }
-  h1 {
-    color: maroon;
+  h2 {
+    color: #53aebe;
     font-size: 100%;
     font-style: italic;
+    display: block;
+    width: 100%;
+  }
+  h1 {
+    color: #D45769;
+    font-size: 150%;
+    font-style: italic;
+    border-bottom: 1px solid #53aebe;
     display: block;
     width: 100%;
   }
   h1.title {
     margin: 0 0 1em;
     padding: 10px;
-    background-color: orange;
-    color: white;
-    border-bottom: 4px solid gold;
+    background-color: #E69D45;
+    color: rgb(44, 49, 51);
+    border-bottom: 4px solid #53aebe;
     font-size: 2em;
     font-style: normal;
   }
@@ -59,22 +66,23 @@
     margin: 10px;
     border-collapse: collapse;
     width: 100%;
-    border-bottom: 2px solid black;
+    border-bottom: 2px solid #53aebe;
   }
   table#movies th {
     border: 2px solid white;
     font-weight: bold;
-    background-color: wheat;
+    background-color: #308695;
   }
   table#movies th, table#movies td {
     padding: 4px;
     text-align: left;
   }
   table#movies tr:hover{
-    background-color: yellow
+    color: rgb(44, 49, 51);
+    background-color: #D45769
   }
   #notice, #warning {
-    background: rosybrown;
+    background: #D45769;
     margin: 1em 0;
     padding: 4px;
   }
@@ -82,5 +90,5 @@
     display: block;
     line-height: 25px;
     font-weight: bold;
-    color: maroon;
+    color: #D45769;
   }

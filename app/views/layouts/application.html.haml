@@ -9,8 +9,8 @@
     
   %body
     = link_to movies_path do
-      %h2 Rotten Potatoes
-    = yield
+      %h1.title Rotten Potatoes 
+    = yield  
     - if flash[:notice]
       #notice.message= flash[:notice]
     - elsif flash[:warning]

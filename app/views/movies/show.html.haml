@@ -1,5 +1,5 @@
 %h1= @movie.title
-%h1 Details about #{@movie.title}
+%h2 Details about #{@movie.title}
  
 %ul#details
   %li
@@ -9,32 +9,28 @@
     Released on:
     = @movie.release_date.strftime("%B %d, %Y")
  
-%h3 Description: 
+%h2 Description: 
 %p#description= @movie.description
 
 = link_to 'Edit movie information', edit_movie_path(@movie) 
 %div
 = link_to 'Delete', movie_path(@movie), :method => 'delete'
 %div
-= link_to 'Back to movie list', movies_path
-%div
-
 
 <!-- ================================================================ -->
-%h3 Reviews:
+%h2 Reviews:
 
-= link_to 'Add Review', new_movie_review_path(@movie)
+- if @movie.reviews.blank?
+  = link_to 'Add Review', new_movie_review_path(@movie)
+  %div
+- else
+  - @movie.reviews.each do |review|
+    = review.potatoes if review.potatoes != nil
+    = review.comments if review.comments != nil 
+    %div
+    = link_to 'Edit review', edit_movie_review_path(@movie)
+    = link_to 'Delete', movie_review_path(@movie), :method => 'delete'
+    %div
+
+= link_to 'Back to movie list', movies_path
 %div
-
-- @movie.reviews.each do |review|
-  =review.potatoes if review.potatoes != nil
-  =review.comments if review.comments != nil 
-  %div
-  = link_to 'Edit review', edit_movie_review_path(@movie)
-  = link_to 'Delete', movie_review_path(@movie), :method => 'delete'
-  %div
-
-<!-- -if @moviegoer_reviews -->
-<!--   = link_to 'Show Review', review_path(@movie) -->
-<!-- -else -->
-<!--  = link_to 'Add Review', new_movie_review_path(@movie) -->

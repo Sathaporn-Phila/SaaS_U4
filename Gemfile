@@ -41,11 +41,17 @@ group :development do
   gem 'rack-mini-profiler', '~> 2.0'
 end
 
-group :test do
-  # Adds support for Capybara system testing and selenium driver
-  gem 'capybara', '>= 3.26'
+
+group :test do 
+  gem 'rspec-rails'
   gem 'selenium-webdriver'
-  # Easy installation and use of web drivers to run system tests with browsers
+  gem 'webdrivers'
+  gem 'cucumber-rails'
+  gem 'cucumber-rails-training-wheels'
+  gem 'database_cleaner'
+  gem 'capybara'
+  gem 'launchy'
+  gem 'selenium-webdriver'
   gem 'webdrivers'
 end
 
@@ -56,3 +62,4 @@ gem 'omniauth-facebook'
 gem 'omniauth-rails_csrf_protection'
 gem 'devise'
 gem 'themoviedb'
+gem 'activerecord-session_store',github: 'rails/activerecord-session_store'

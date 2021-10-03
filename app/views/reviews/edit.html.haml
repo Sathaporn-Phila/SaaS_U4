@@ -2,5 +2,5 @@
 
 = form_tag movie_review_path(@movie), :method => :put do
   = render :partial => 'review_form'
-  = link_to 'Cancel', @movie
+  = link_to 'Cancel', movie_path(@movie)
   = submit_tag 'Save Changes'

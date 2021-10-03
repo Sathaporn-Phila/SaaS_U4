@@ -1,6 +1,8 @@
 class ReviewsController < ApplicationController
-    before_action :has_moviegoer_and_movie, :only => [:new, :create, :edit, :update, :destroy]
+    before_action :has_moviegoer_and_movie, :only => [:new, :create, :edit]
+
     protected
+
     def has_moviegoer_and_movie
       unless @user
         flash[:warning] = 'You must be logged in to create a review.'
@@ -12,40 +14,41 @@ class ReviewsController < ApplicationController
       end
     end
 
+    public
+
     def new
       @review = @movie.reviews.build
     end
-
+    
     def create
-      # since moviegoer_id is a protected attribute that won't get
-      # assigned by the mass-assignment from params[:review], we set it
-      # by using the << method on the association.  We could also
-      # set it manually with review.moviegoer = @user.
       @user.reviews << @movie.reviews.build(review_params)
       redirect_to movie_path(@movie)
     end
 
-    def edit
-      @review = Review.find_by_id(params[:movie_id])
+    def edit 
+      @movie = Movie.find params[:movie_id]
+      @review = Review.find_by(movie_id:@movie.id, user_id:@user.id)
     end
 
     def update
-      if @review.update(review_params)
-        flash[:notice] = "Your review was successfully updated."
-        redirect_to movie_path(@movie)
-      else
-        render 'edit'
-      end
+      @movie = Movie.find params[:movie_id]
+      @review = Review.find_by(movie_id:@movie.id, user_id:@user.id)
+      @review.update(review_params)
+      flash[:notice] = "Your review was successfully updated."
+      redirect_to movie_path(@movie)
     end
 
     def destroy
-      @review = Review.find_by_id(params[:movie_id])
+      @movie = Movie.find params[:movie_id]
+      @review = Review.find_by(movie_id:@movie.id, user_id:@user.id) 
       @review.destroy
       flash[:notice] = "Your review deleted."
+      redirect_to movie_path(@movie)
     end
 
     private
+
     def review_params
       params.require(:review).permit(:potatoes, :comments, :movie_id, :user_id)
-    end   
+    end  
 end

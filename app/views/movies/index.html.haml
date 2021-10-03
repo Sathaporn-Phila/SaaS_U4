@@ -5,7 +5,8 @@
   %p.login= link_to 'Log in with your Facebook account', user_facebook_omniauth_authorize_path,method: :post
 
 -if current_user
-  %h1 All Movies
+  %h1 All Movies 
+  = link_to 'Add new movie', new_movie_path
 
   %table#movies
     %thead
@@ -24,7 +25,7 @@
           %td= movie.release_date
           %td= link_to "More about #{movie.title}", movie_path(movie)
 
-  = link_to 'Add new movie', new_movie_path
+  
 
   = form_tag search_tmdb_path do
     = render :partial => 'search_tmdb_form'
