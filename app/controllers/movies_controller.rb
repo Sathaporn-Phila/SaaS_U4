@@ -5,6 +5,7 @@ class MoviesController < ApplicationController
   end
 
   def show
+    logger.debug @user
     id = params[:id] # retrieve movie ID from URI route
     begin
        @movie = Movie.find(id) # look up movie by unique ID

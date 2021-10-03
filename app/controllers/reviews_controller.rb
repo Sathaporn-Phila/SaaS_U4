@@ -12,27 +12,21 @@ class ReviewsController < ApplicationController
       end
     end
 
-    public
     def new
-      # @review = @movie.reviews.build
-      @review = Review.new
+      @review = @movie.reviews.build
     end
+
     def create
       # since moviegoer_id is a protected attribute that won't get
       # assigned by the mass-assignment from params[:review], we set it
       # by using the << method on the association.  We could also
       # set it manually with review.moviegoer = @user.
-
-      # @user.reviews << @movie.reviews.build(review_params)
-      # redirect_to movie_path(@movie)
-
-      @review = Review.new(review_params)
-      @review.movie_id = @movie.id
-      @review.user_id = @user
+      @user.reviews << @movie.reviews.build(review_params)
+      redirect_to movie_path(@movie)
     end
 
     def edit
-      # @review = Review.find_by_id(params[:movie_id])
+      @review = Review.find_by_id(params[:movie_id])
     end
 
     def update
@@ -45,7 +39,7 @@ class ReviewsController < ApplicationController
     end
 
     def destroy
-      # @review = Review.find_by_id(params[:movie_id])
+      @review = Review.find_by_id(params[:movie_id])
       @review.destroy
       flash[:notice] = "Your review deleted."
     end
@@ -53,12 +47,5 @@ class ReviewsController < ApplicationController
     private
     def review_params
       params.require(:review).permit(:potatoes, :comments, :movie_id, :user_id)
-    end
-    def find_movie
-      @movie = Movie.find(params[:id])
-    end
-    def find_review
-      @review = Review.find(params[:id])
-    end
-    
+    end   
 end
