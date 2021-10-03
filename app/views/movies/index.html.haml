@@ -1,10 +1,10 @@
-- if @user
-  %p.welcome  Welcome, #{@user.first_name}!
+- if current_user
+  %p.welcome  Welcome, #{current_user.first_name}!
   =link_to 'log out', logout_path
 - else
   %p.login= link_to 'Log in with your Facebook account', user_facebook_omniauth_authorize_path,method: :post
 
--if @user
+-if current_user
   %h1 All Movies
 
   %table#movies

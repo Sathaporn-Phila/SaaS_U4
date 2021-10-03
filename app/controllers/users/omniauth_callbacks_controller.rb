@@ -16,9 +16,8 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     end
 
     def destroy
-      session.clear
-      set_user
-      redirect_to('/users/sign_out')
+      reset_session
+      redirect_to users_sign_out_path
     end
 
   end

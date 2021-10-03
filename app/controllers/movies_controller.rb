@@ -1,4 +1,5 @@
 class MoviesController < ApplicationController
+  before_action :authenticate_user!,except: [:index]
   def index
     @movies = Movie.all
   end
@@ -20,8 +21,9 @@ class MoviesController < ApplicationController
   end
 
   def search_tmdb
-    @movie = Movie.new
-    flash[:notice]="#{@movie.all}"
+    @title = params[:movie][:title]
+    logger.debug "#{@title}"
+    redirect_to movies_path
   end
 
   def create
