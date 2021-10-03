@@ -11,17 +11,26 @@
  
 %h3 Description: 
 %p#description= @movie.description
+
+= link_to 'Edit movie information', edit_movie_path(@movie) 
+%div
 = link_to 'Delete', movie_path(@movie), :method => 'delete'
+%div
+= link_to 'Back to movie list', movies_path
+%div
 
 
 <!-- ================================================================ -->
 %h3 Reviews:
 
+= link_to 'Add Review', new_movie_review_path(@movie)
+%div
+
 - @movie.reviews.each do |review|
   =review.potatoes if review.potatoes != nil
   =review.comments if review.comments != nil 
   %div
-  = link_to 'Edit Review', edit_movie_review_path(@movie)
+  = link_to 'Edit review', edit_movie_review_path(@movie)
   = link_to 'Delete', movie_review_path(@movie), :method => 'delete'
   %div
 
@@ -29,10 +38,3 @@
 <!--   = link_to 'Show Review', review_path(@movie) -->
 <!-- -else -->
 <!--  = link_to 'Add Review', new_movie_review_path(@movie) -->
-
-= link_to 'Add Review', new_movie_review_path(@movie)
-%div
-= link_to 'Edit info', edit_movie_path(@movie) 
-%div
-= link_to 'Back to movie list', movies_path
-%div

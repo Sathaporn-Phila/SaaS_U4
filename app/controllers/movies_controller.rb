@@ -22,7 +22,12 @@ class MoviesController < ApplicationController
 
   def search_tmdb
     @title = params[:movie][:title]
-    logger.debug "#{@title}"
+    logger.debug @title
+    @source = Tmdb::Search.new
+    @source.resource('movie')
+    @source.query(@title)
+    @result = @source.fetch
+    logger.debug @result
     redirect_to movies_path
   end
 
