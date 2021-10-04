@@ -1,13 +1,19 @@
+%h1 Searching result
+
 %table#movies
     %thead
         %tr
             %th Movie Title
             %th Rating
-            %th More Info
+            %th Description
     %tbody
         - for movie in @results
             %tr
                 %td= movie["title"]
                 %td= movie["popularity"]
                 %td= movie["overview"]
-                %td=link_to 'choose_movie',set_movie_object_path(:title => movie["title"] ,:rating=>movie["poster_path"],:description=>movie["overview"],:release_date=>movie["release_date"])
+                %td=link_to 'Select', set_movie_object_path(:title => movie["title"] ,
+                                                            :rating=>movie["popularity"],
+                                                            :description=>movie["overview"],
+                                                            :release_date=>movie["release_date"])
+= link_to 'Back to movie list', movies_path

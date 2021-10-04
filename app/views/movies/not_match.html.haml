@@ -1,0 +1,16 @@
+%h1 Sorry no match for ""
+
+= label :movie, :title, 'Title'
+= :title => params[:title]
+ 
+= label :movie, :rating, 'Rating'
+= :rating =>params[:rating]
+ 
+= label :movie, :release_date, 'Released On'
+= :release_date =>params[:release_date]
+
+= label :movie, :description, 'Movie Description'
+= :description=>params[:description]
+
+= submit_tag 'ADD'
+= link_to 'Cancel', movie_path(@movie)

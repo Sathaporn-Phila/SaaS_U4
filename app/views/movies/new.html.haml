@@ -2,5 +2,7 @@
  
 = form_tag movies_path, :method => :post do
   = render :partial => 'movie_form'
+  %div
+  = submit_tag 'ADD MOVIE'
+  %div
   = link_to 'Cancel', movies_path
-  = submit_tag 'Save Changes'

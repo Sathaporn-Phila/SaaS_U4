@@ -1,7 +1,7 @@
 class MoviesController < ApplicationController
   before_action :authenticate_user!,except: [:index]
 
-  skip_before_action :verify_authenticity_token # <-- Bug report: Before process_action callback :verify_authenticity_token has not been defined
+  skip_before_action :verify_authenticity_token 
   def index
     @movies = Movie.all
     @results = []
@@ -22,17 +22,6 @@ class MoviesController < ApplicationController
   def new
     # default: render 'new' template
     @movie = Movie.new
-  end
-
-  def search_tmdb
-    set_config
-    @title = params[:movie][:title]
-    logger.debug @title
-    @source = Tmdb::Search.new
-    @source.resource('movie')
-    @source.query(@title)
-    @results = @source.fetch
-    render "_choose_movie"
   end
 
   def create
@@ -66,43 +55,30 @@ class MoviesController < ApplicationController
     redirect_to movies_path
   end
 
+  def search_tmdb
+    set_config
+    @title = params[:movie][:title]
+    logger.debug @title
+    @source = Tmdb::Search.new
+    @source.resource('movie')
+    @source.query(@title)
+    @results = @source.fetch
+    if @results.length > 0
+      render "_choose_movie"
+    else
+      flash[:notice] = "Sorry, Not found for #{@title}"
+      redirect_to movies_path
+    end
+  end
+
   def set_movie_from_result
-    @movie = Movie.create!(:title => params[:title],:rating =>params[:rating],:release_date =>params[:release_date],:description=>params[:description]) 
+    @movie = Movie.new( :title => params[:title], 
+                        :rating => params[:rating], 
+                        :release_date => params[:release_date], 
+                        :description=> params[:description]) 
+    @movie.save
     redirect_to movies_path
   end
-=begin
-# ของริว  ของริว  ของริว  ของริว  ของริว  ของริว  ของริว 
-def search_tmdb
-		@search_tmdb = params[:search_tmdb]
-		if @search_tmdb == ""
-			flash[:warning] = "You cannot blank"
-			redirect_to movies_path
-		else 
-			@movies = Movie.find_in_tmdb(@search_tmdb)
-			if @movies != []
-				render 'tmdb'
-			else
-				flash[:warning] = "Sorry, No match for '#{params[:search_tmdb]}'"
-				redirect_to movies_path
-			end 
-		end
-	end
-
-	def create_from_tmdb
-		movie_id = params[:tmdb_id]
-		m = Movie.get_from_tmdb(movie_id)
-		@movie = Movie.new({
-						:title => m["title"], 
-						:rating => "",    
-						:release_date => m["release_date"], 
-						:description => m["overview"]
-		})
-		if @movie.save
-			flash[:notice] = "'#{@movie.title}' was successfully created."
-			redirect_to new_movie_review_path(@movie)
-		end
-	end
-=end
 
   private
 
@@ -133,4 +109,5 @@ def search_tmdb
       @movies = @movies.send(filter) if params[filter]
   end
 =end
+
 end

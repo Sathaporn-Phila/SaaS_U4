@@ -1,5 +1,5 @@
 - if current_user
-  %p.welcome  Welcome, #{current_user.first_name}!
+  %p.welcome  Welcome, #{current_user.last_name}!
   =link_to 'log out', logout_path
 - else
   %p.login= link_to 'Log in with your Facebook account', user_facebook_omniauth_authorize_path,method: :post
@@ -15,7 +15,7 @@
         %th Movie Title
         %th Rating
         %th Release Date
-        %th More Info
+        %th Description
     %tbody
       - @movies.each_with_index do |movie, index|
         %tr
@@ -24,8 +24,6 @@
           %td= movie.rating
           %td= movie.release_date
           %td= link_to "More about #{movie.title}", movie_path(movie)
-
-  
 
   = form_tag search_tmdb_path do
     = render :partial => 'search_tmdb_form'
